@@ -49,6 +49,7 @@ var bot = (function bot() {
 		stop: () => {
 			stage.set(Stage.Map)
 			clearInterval(interval)
+			interval = null
 		}
 	}
 
@@ -100,7 +101,6 @@ var bot = (function bot() {
 			return false
 		} else {
 			stage.set(Stage.Map)
-			pressBackToMap()
 			return true
 		}
 	}
@@ -110,7 +110,6 @@ var bot = (function bot() {
 		if(continueButton === null) return false
 
 		continueButton.dispatchEvent(click)
-		pressBackToMap()
 		stage.set(Stage.Map)
 		return true
 	}
