@@ -71,9 +71,12 @@ var bot = (function bot() {
 		}
 
 		interval = setInterval(() => {
-			if(stage.isMap()) pressFightSectionButton(false)
-			else if(stage.isFight()) postFightButtonFlow(true)
-			else if(stage.isReward()) pressContinueButton(true)
+			if(stage.isMap()) {
+				if(pressBackToMap()) return
+				pressFightSectionButton(false)
+			}
+			else if(stage.isFight()) postFightButtonFlow()
+			else if(stage.isReward()) pressContinueButton()
 		}, 1000)
 	}
 
@@ -90,7 +93,7 @@ var bot = (function bot() {
 		return true
 	}
 
-	function postFightButtonFlow(raid = false) {
+	function postFightButtonFlow() {
 		const postFightButton = document.querySelector('.post-fight-button')
 		if(postFightButton === null) return false
 
@@ -105,7 +108,7 @@ var bot = (function bot() {
 		}
 	}
 	
-	function pressContinueButton(raid = false) {
+	function pressContinueButton() {
 		const continueButton = document.querySelector('.srpg-button-continue')
 		if(continueButton === null) return false
 
@@ -116,7 +119,9 @@ var bot = (function bot() {
 
 	function pressBackToMap() {
 		const btn = document.querySelector('.srpg-button-maps')
+		if(btn === null) return false
 		btn.dispatchEvent(click)
+		return true
 	}
 })()
 
