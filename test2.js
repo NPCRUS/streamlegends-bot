@@ -39,7 +39,7 @@ var bot = (() => {
       return 'StreamRpgRaidLeaderboard'
     }
 
-    static get MapList(){
+    static get MapList() {
       return 'StreamRpgMapList'
     }
   }
@@ -49,7 +49,7 @@ var bot = (() => {
     stop: () => stop(),
   }
 
-  function stop(){
+  function stop() {
     clearInterval(interval)
     interval = null
     mapIndex = 0
@@ -61,7 +61,7 @@ var bot = (() => {
 
     mapIndex = getSelectedArea()
 
-    if(mapIndex === null){
+    if (mapIndex === null) {
       return console.error('plz start bot only on map')
     }
 
@@ -125,25 +125,25 @@ var bot = (() => {
   }
 
   function postFightButtonFlow() {
-		const postFightButton = document.querySelector('.post-fight-button')
-    if(postFightButton === null) return false
-    
+    const postFightButton = document.querySelector('.post-fight-button')
+    if (postFightButton === null) return false
+
     postFightButton.dispatchEvent(click)
     return true
   }
-  
-	function pressContinueButton() {
-		const continueButton = document.querySelector('.srpg-button-continue')
-		if(continueButton === null) return false
 
-		continueButton.dispatchEvent(click)
-		return true
-	}
+  function pressContinueButton() {
+    const continueButton = document.querySelector('.srpg-button-continue')
+    if (continueButton === null) return false
+
+    continueButton.dispatchEvent(click)
+    return true
+  }
 
   function pressBackToMap() {
-		const btn = document.querySelector('.srpg-button-maps')
-		if(btn === null) return false
-		btn.dispatchEvent(click)
-		return true
+    const btn = document.querySelector('.srpg-button-maps')
+    if (btn === null) return false
+    btn.dispatchEvent(click)
+    return true
   }
 })()
