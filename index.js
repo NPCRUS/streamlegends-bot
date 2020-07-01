@@ -1,4 +1,4 @@
-var bot = (() => {
+(() => {
   const click = new MouseEvent('click', {
     view: window,
     bubbles: true,
@@ -8,7 +8,7 @@ var bot = (() => {
 
   class Stage {
     constructor() {
-      this.state = Stage.Map
+      this.state = ''
     }
 
     set(state) {
@@ -42,13 +42,13 @@ var bot = (() => {
 
   let interval = null
   let mapIndex = 0
-  let areaIndex = 0
   let stage = new Stage();
 
-  return {
+  const controls = {
     start: () => setupBotInterval(),
     stop: () => stop(),
   }
+  drawInterface(controls)
 
   function stop() {
     clearInterval(interval)
@@ -56,15 +56,13 @@ var bot = (() => {
     mapIndex = 0
   }
 
+  document.on
+
   function setupBotInterval() {
     if (interval !== null)
       return console.error('some flow is already running, stop it first')
 
     mapIndex = getSelectedArea()
-
-    if (mapIndex === null) {
-      return console.error('plz start bot only on map')
-    }
 
     interval = setInterval(() => {
       stage.set(getWindowStage())
@@ -79,8 +77,7 @@ var bot = (() => {
       } else if (stage.is(Stage.LeaderBoard)) {
         pressBackToMap()
       } else if (stage.is(Stage.MapList)) {
-        console.error('error: jumped to maplist')
-        stop()
+        selectRaidOrUsualMap()
       }
     }, 1000)
   }
@@ -98,7 +95,7 @@ var bot = (() => {
       if (node.classList.contains('node-selected')) return i
     }
 
-    return null
+    return 0
   }
 
   function selectAreaOnMap(index) {
@@ -146,5 +143,44 @@ var bot = (() => {
     if (btn === null) return false
     btn.dispatchEvent(click)
     return true
+  }
+
+  function selectRaidOrUsualMap() {
+    const raidMapButton = document.querySelector('.srpg-map-list-node.map-raid')
+    if(raidMapButton !== null) {
+      raidMapButton.dispatchEvent(click)
+    } else {
+      document.querySelector('.srpg-map-list-node.map-completed').dispatchEvent(click)
+    }
+  }
+
+  function drawInterface(controls) {
+    const container = document.createElement('div')
+    container.style.top = '0'
+    container.style.left = '0'
+    container.style.position = 'absolute'
+
+    const startToggle = createButton('start')
+    startToggle.onclick = () => {
+      if(startToggle.innerHTML === 'start') {
+        startToggle.innerHTML = 'stop'
+        controls.start()
+      } else {
+        startToggle.innerHTML = 'start'
+        controls.stop()
+      }
+    }
+    container.appendChild(startToggle)
+
+    document.querySelector('.channel-buff-text').appendChild(container)
+
+    function createButton(name) {
+      const button = document.createElement('button')
+      button.innerHTML = name
+      button.style.color = 'black'
+      button.style.fontSize = '12px'
+
+      return button
+    }
   }
 })()
