@@ -6,10 +6,6 @@ var bot = (() => {
     clientX: 20,
   })
 
-  let interval = null
-  let mapIndex = 0
-  let areaIndex = 0
-
   class Stage {
     constructor() {
       this.state = Stage.Map
@@ -20,7 +16,7 @@ var bot = (() => {
     }
 
     is(state) {
-      this.state === state
+      return this.state === state
     }
 
     static get Map() {
@@ -44,6 +40,11 @@ var bot = (() => {
     }
   }
 
+  let interval = null
+  let mapIndex = 0
+  let areaIndex = 0
+  let stage = new Stage();
+
   return {
     start: () => setupBotInterval(),
     stop: () => stop(),
@@ -66,18 +67,18 @@ var bot = (() => {
     }
 
     interval = setInterval(() => {
-      let stage = getWindowStage()
+      stage.set(getWindowStage())
 
-      if (stage === Stage.Map) {
+      if (stage.is(Stage.Map)) {
         selectAreaOnMap(mapIndex)
         pressCombatSectionButton()
-      } else if (stage === Stage.Combat) {
+      } else if (stage.is(Stage.Combat)) {
         postFightButtonFlow()
-      } else if (stage === Stage.Reward) {
+      } else if (stage.is(Stage.Reward)) {
         pressContinueButton()
-      } else if (stage === Stage.LeaderBoard) {
+      } else if (stage.is(Stage.LeaderBoard)) {
         pressBackToMap()
-      } else if (stage === Stage.MapList) {
+      } else if (stage.is(Stage.MapList)) {
         console.error('error: jumped to maplist')
         stop()
       }
