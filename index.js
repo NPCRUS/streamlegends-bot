@@ -56,8 +56,6 @@
     mapIndex = 0
   }
 
-  document.on
-
   function setupBotInterval() {
     if (interval !== null)
       return console.error('some flow is already running, stop it first')
