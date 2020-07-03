@@ -156,7 +156,7 @@
     const container = document.createElement('div')
     container.style.top = '0'
     container.style.left = '0'
-    container.style.position = 'absolute'
+    container.style.position = 'fixed'
 
     const startToggle = createButton('start')
     startToggle.onclick = () => {
@@ -170,7 +170,7 @@
     }
     container.appendChild(startToggle)
 
-    document.querySelector('.channel-buff-text').appendChild(container)
+    document.querySelector('body').appendChild(container)
 
     function createButton(name) {
       const button = document.createElement('button')
