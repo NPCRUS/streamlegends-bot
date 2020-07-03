@@ -87,8 +87,10 @@
   }
 
   function getWindowStage() {
-    return document.querySelector('.srpg-content-scrollbar-scrollable, .StreamRpg')
-      .lastChild.classList[0]
+    let root = document.querySelector('.srpg-content').lastChild
+    if(root.classList[0] === Stage.Error) return Stage.Error
+
+    return document.querySelector('.srpg-content-scrollbar-scrollable').lastChild.classList[0]
   }
 
   function getSelectedArea() {
