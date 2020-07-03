@@ -38,6 +38,10 @@
     static get MapList() {
       return 'StreamRpgMapList'
     }
+
+    static get Error() {
+      return 'StreamRpgError'
+    }
   }
 
   let interval = null
@@ -76,13 +80,17 @@
         pressBackToMap()
       } else if (stage.is(Stage.MapList)) {
         selectRaidOrUsualMap()
+      } else if (stage.is(Stage.Error)) {
+        pressContinueButton() 
       }
     }, 1000)
   }
 
   function getWindowStage() {
-    return document.querySelector('.srpg-content-scrollbar-scrollable')
-      .lastChild.classList[0]
+    let root = document.querySelector('.srpg-content').lastChild
+    if(root.classList[0] === Stage.Error) return Stage.Error
+
+    return document.querySelector('.srpg-content-scrollbar-scrollable').lastChild.classList[0]
   }
 
   function getSelectedArea() {
@@ -156,7 +164,7 @@
     const container = document.createElement('div')
     container.style.top = '0'
     container.style.left = '0'
-    container.style.position = 'absolute'
+    container.style.position = 'fixed'
 
     const startToggle = createButton('start')
     startToggle.onclick = () => {
@@ -170,7 +178,7 @@
     }
     container.appendChild(startToggle)
 
-    document.querySelector('.channel-buff-text').appendChild(container)
+    document.querySelector('body').appendChild(container)
 
     function createButton(name) {
       const button = document.createElement('button')
