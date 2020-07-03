@@ -38,6 +38,10 @@
     static get MapList() {
       return 'StreamRpgMapList'
     }
+
+    static get Error() {
+      return 'StreamRpgError'
+    }
   }
 
   let interval = null
@@ -76,12 +80,14 @@
         pressBackToMap()
       } else if (stage.is(Stage.MapList)) {
         selectRaidOrUsualMap()
+      } else if (stage.is(Stage.Error)) {
+        pressContinueButton() 
       }
     }, 1000)
   }
 
   function getWindowStage() {
-    return document.querySelector('.srpg-content-scrollbar-scrollable')
+    return document.querySelector('.srpg-content-scrollbar-scrollable, .StreamRpg')
       .lastChild.classList[0]
   }
 
